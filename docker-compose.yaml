@@ -7,9 +7,10 @@ services:
       - "5000:5000"  # Internal port Flask is using
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.myapp.rule=Host(`www.chudars.lv`)"
-      - "traefik.http.routers.myapp.entrypoints=web"
-      - "traefik.http.services.myapp.loadbalancer.server.port=5000"  # Port your app is exposed on
+      - "traefik.http.routers.myapp.rule=Host(`www.pyapi.chudars.lv`)"
+      - "traefik.http.routers.myapp.entrypoints=websecure"  # Use HTTPS entry point
+      - "traefik.http.routers.myapp.tls=true"  # Enable TLS
+      - "traefik.http.services.myapp.loadbalancer.server.port=5000" 
     networks:
       - web
 
@@ -20,8 +21,13 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"  # HTTPS entry point
+      - "--certificatesresolvers.le.acme.tlschallenge=true"  # Use TLS-ALPN-01 challenge
+      - "--certificatesresolvers.le.acme.email=jekabs777@example.com"  # Replace with your email
+      - "--certificatesresolvers.le.acme.storage=/letsencrypt/acme.json"  # Path to store cert data
     ports:
       - "80:80"   # Redirects HTTP traffic
+      - "443:443"  # HTTPS
       - "8080:8080"  # Traefik dashboard
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"

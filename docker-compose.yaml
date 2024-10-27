@@ -10,12 +10,13 @@ services:
       - "traefik.http.routers.myapp.rule=Host(`www.pyapi.chudars.lv`)"
       - "traefik.http.routers.myapp.entrypoints=websecure"  # Use HTTPS entry point
       - "traefik.http.routers.myapp.tls=true"  # Enable TLS
+      - "traefik.http.routers.myapp.tls.certresolver=le"  # Set certificate resolver to le (Let's Encrypt)
       - "traefik.http.services.myapp.loadbalancer.server.port=5000" 
     networks:
       - web
 
   traefik:
-    image: traefik:v3.2
+    image: traefik:v2.10
     container_name: traefik
     command:
       - "--api.insecure=true"
@@ -31,6 +32,7 @@ services:
       - "8080:8080"  # Traefik dashboard
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"  # Mount to store Let's Encrypt certificates
     networks:
       - web
 

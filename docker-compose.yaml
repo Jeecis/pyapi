@@ -16,7 +16,7 @@ services:
       - web
 
   traefik:
-    image: traefik:v2.10
+    image: traefik:v3.2
     container_name: traefik
     command:
       - "--api.insecure=true"

@@ -7,7 +7,7 @@ services:
       - "5000:5000"  # Internal port Flask is using
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.myapp.rule=Host(`www.pyapi.chudars.lv`)"
+      - "traefik.http.routers.myapp.rule=Host(`pyapi.chudars.lv`)"
       - "traefik.http.routers.myapp.entrypoints=websecure"  # Use HTTPS entry point
       - "traefik.http.routers.myapp.tls=true"  # Enable TLS
       - "traefik.http.routers.myapp.tls.certresolver=le"  # Set certificate resolver to le (Let's Encrypt)

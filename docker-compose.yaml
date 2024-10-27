@@ -7,7 +7,7 @@ services:
       - "5000:5000"  # Traefik dashboard
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.myapp.rule=Host(`www.chudars.lv`)"
+      - "traefik.http.routers.myapp.rule=Host(`chudars.lv`)"
       - "traefik.http.services.myapp.loadbalancer.server.port=5000"  # Port your app is exposed on
     networks:
       - web

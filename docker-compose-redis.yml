@@ -1,0 +1,20 @@
+services: 
+  redis:
+    image: redis:latest
+    container_name: my_redis
+    ports:
+      - "6379:6379"  # Exposes Redis on the default port
+    volumes:
+      - redis_data:/data  # Persists data in a named volume
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    restart: unless-stopped
+    networks:
+      - web  # Separate network for database communication
+
+networks:
+  web:
+    driver: bridge
+
+volumes:
+  redis_data:

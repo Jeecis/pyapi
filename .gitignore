@@ -1,2 +1,5 @@
 .env
 _*
+letsencrypt/
+*.json
+acme.json

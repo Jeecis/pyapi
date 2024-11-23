@@ -1,7 +1,4 @@
 Flask==3.0.3
-SQLAlchemy==2.0.36
 psycopg2==2.9.10
 redis==5.2.0
 uuid==1.30
-asgiref==3.8.1
-uvicorn==0.32.0

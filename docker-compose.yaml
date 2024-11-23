@@ -3,6 +3,8 @@ services:
     build: .
     container_name: my_flask_app
     restart: always
+    env_file:
+      - .env
     ports:
       - "5000:5000"  # Internal port Flask is using
     labels:
@@ -36,17 +38,16 @@ services:
     networks:
       - web
   
-  db:
-    image: postgres:17  # Use the latest compatible version
-    restart: always
+  redis:
+    image: redis:latest
+    container_name: redis-db
     ports:
-      - 5432:5432
-    environment:
-      - POSTGRES_USER=user  # Replace with your preferred username
-      - POSTGRES_PASSWORD=123  # Replace with a secure password
-      - POSTGRES_DB=mydatabase  # Replace with your database name
+      - "6379:6379"  # Exposes Redis on the default port
     volumes:
-      - postgres_data:/var/lib/postgresql/data  # Persist data
+      - redis_data:/data  # Persists data in a named volume
+    environment:
+      - REDIS_REPLICATION_MODE=master
+    restart: unless-stopped
     networks:
       - web  # Separate network for database communication
 
@@ -55,4 +56,4 @@ networks:
     driver: bridge
 
 volumes:
-  postgres_data:
+  redis_data:
